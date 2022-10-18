@@ -1,19 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { LANCHES } from './lanche.mock';
+import { collection, getDocs, orderBy} from "firebase/firestore";
 import { database } from '../firestore/firestoreprovider';
 
 @Injectable()
 export class LancheService {
-    private lanches = LANCHES;
     
-
     public async getLanches(){
-        const lanchesRef = database.collection('lanches').orderBy("id");
-    const lanchesDoc = await lanchesRef.get();
+        // const lanchesRef = database.collection('lanches').orderBy("id");
+        // const lanchesDoc = await lanchesRef.get();
 
-    const lanches = [];
+        // const lanches = [];
 
-    lanchesDoc.forEach(doc => lanches.push(doc.data()))
-    return lanches;
+        // lanchesDoc.forEach(doc => lanches.push(doc.data()))
+        // return lanches;
+        const ref = collection(database,'Cardapio')
+        const teste = getDocs(ref)
+            .then((snapshot) => {
+                let cardapio = []
+                snapshot.docs.forEach((doc) => {
+                    cardapio.push({ ...doc.data()})
+                    
+                })
+                return cardapio;
+            })
+        return teste;
     }
 }
