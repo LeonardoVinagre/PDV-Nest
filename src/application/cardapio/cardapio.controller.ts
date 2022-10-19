@@ -7,7 +7,7 @@ export class CardapioController {
     constructor(private cardapioService: CardapioService) {}
 
     @Get()
-    async getCardapio() {
+     getCardapio() {
         return this.cardapioService.getCardapio();
     }
 }
